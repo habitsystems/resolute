@@ -1,0 +1,71 @@
+<!--
+  Prioritise Everything
+  Copyright (c) 2026 Habit Labs
+  SPDX-License-Identifier: GPL-3.0-or-later
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prioritise Everything</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E✅%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="container">
+    <h1>Prioritise Everything</h1>
+    <p class="muted">Add tasks, compare pairs, get a ranked list. Add more tasks anytime — the ranking updates.</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>1) Add your tasks</h2>
+      <form id="addForm" class="row">
+        <input id="taskInput" type="text" placeholder="e.g. Write report, Pay invoices, Plan sprint" autocomplete="off" />
+        <button type="submit">Add task</button>
+      </form>
+      <p class="hint">Tip: Add as many as you like. Duplicates are ignored. You can come back and add more later.</p>
+      <ul id="taskList" class="task-list"></ul>
+      <div class="controls">
+        <button id="resetBtn" class="danger">Reset all</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Compare pairs</h2>
+      <div id="compareEmpty" class="empty hidden">Add at least two tasks to start pairwise comparisons.</div>
+      <div id="compareDone" class="empty hidden">All comparisons are done for the current set of tasks. You can still add more tasks.</div>
+      <div id="compareCard" class="compare hidden">
+        <div class="progress"><span id="progressText">0 / 0</span></div>
+        <div class="choices">
+          <button id="choiceA" class="choice"></button>
+          <div class="vs">vs</div>
+          <button id="choiceB" class="choice"></button>
+        </div>
+        <div class="controls">
+          <button id="undoBtn" class="secondary">Undo last</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3) Ranked priorities</h2>
+      <ol id="rankingList" class="ranking-list"></ol>
+      <p class="hint">Ranking updates after each comparison. It’s based on pairwise wins.</p>
+      <div class="controls">
+        <button id="printBtn" class="secondary" title="Print or save as PDF">Print / PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container muted small">
+    <p>Runs locally in your browser. Your data is stored on this device only.</p>
+  </footer>
+
+  <!-- Print area (hidden on screen; shown only when printing) -->
+  <div id="printArea" class="print-area hidden" aria-hidden="true"></div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

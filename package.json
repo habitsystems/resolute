@@ -1,0 +1,12 @@
+{
+  "name": "resolute",
+  "version": "1.0.0",
+  "description": "Prioritisation tool using pairwise comparisons to rank tasks.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "license": "GPL-3.0-or-later",
+  "private": true
+}
