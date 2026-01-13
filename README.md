@@ -1,5 +1,7 @@
 # Prioritise Everything
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE) [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-via%20Actions-2ea44f?logo=github)](https://docs.github.com/en/pages)
+
 A tiny, no-backend tool that helps you rank any number of tasks by making simple pairwise choices. Add tasks, click which is more important when shown two at a time, and get a living priority list that updates as you add more tasks.
 
 - Runs locally in your browser
@@ -123,3 +125,24 @@ If not, see https://www.gnu.org/licenses/.
 See the LICENSE file for the full text.
 
 Note: On 2026-01-11, this project was re-licensed from MIT to GPL-3.0-or-later.
+
+
+---
+
+## Deploying to GitHub Pages
+
+This repo includes a GitHub Actions workflow that deploys the static site directly from the `public/` folder.
+
+Steps to enable and publish:
+
+1. In your repository, go to Settings → Pages.
+2. Under Build and deployment, select “GitHub Actions”.
+3. Push to `main` (or re‑push), or run the workflow manually from the Actions tab.
+4. After the run finishes, the live URL appears on the workflow’s final step and in the repository’s Environments → github-pages.
+
+Notes
+- The workflow file is at `.github/workflows/pages.yml` and uploads the `public/` directory.
+- A `.nojekyll` file is added automatically during the run so Pages won’t apply Jekyll processing.
+- Asset URLs are relative (`style.css`, `app.js`), so the site works at project paths like `https://username.github.io/repo/` and at custom subpaths like `/tools/resolute/`.
+- If your default branch is not `main`, change the trigger in the workflow (`on.push.branches`).
+- You don’t need the Node server for Pages; it’s only for local development.

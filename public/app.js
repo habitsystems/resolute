@@ -265,24 +265,69 @@
     if (!n) return;
     const { sorted } = computeRanking();
 
-    // Build print markup (DOM-based to avoid HTML injection)
+    const nameTrim = (state.name || '').trim();
+    const titleText = nameTrim ? `${possessive(nameTrim)} Prioritised List` : 'Prioritised List';
+    const when = new Date().toLocaleString();
+
+    // Try a dedicated print window for maximal cross-browser reliability
+    const popup = window.open('', '_blank', 'noopener,noreferrer');
+    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    if (popup && popup.document) {
+      const itemsHtml = sorted.map(t => `<li>${esc(toTitleCase(t.title))}</li>`).join('');
+      const html = `<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>${esc(titleText)}</title>
+<style>
+  @page { size: auto; margin: 8mm; }
+  html, body { background: #fff; }
+  body { color: #000; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+  .print-doc { max-width: 700px; margin: 0 auto; padding: 0; }
+  .print-title { font-size: 20pt; margin: 0 0 6pt 0; font-weight: 700; }
+  .print-meta { font-size: 9pt; margin: 0 0 10pt 0; color: #333; }
+  .print-list { font-size: 12pt; padding-left: 18pt; margin: 0; }
+  .print-list li { margin: 4pt 0; break-inside: avoid; page-break-inside: avoid; }
+</style>
+<body>
+  <div class="print-doc">
+    <h1 class="print-title">${esc(titleText)}</h1>
+    <div class="print-meta">Generated on ${esc(when)} • ${n} task${n!==1?'s':''}</div>
+    <ol class="print-list">${itemsHtml}</ol>
+  </div>
+  <script>
+    window.addEventListener('load', function(){
+      setTimeout(function(){
+        window.print();
+        setTimeout(function(){ try{ window.close(); }catch(e){} }, 300);
+      }, 50);
+    });
+    window.addEventListener('afterprint', function(){ try{ window.close(); }catch(e){} });
+  </script>
+</body>
+</html>`;
+      try {
+        popup.document.open();
+        popup.document.write(html);
+        popup.document.close();
+        try { popup.focus(); } catch {}
+      } catch (e) {
+        try { popup.close(); } catch {}
+      }
+      return;
+    }
+
+    // Fallback: use hidden in-page print area
     printArea.innerHTML = '';
     const doc = document.createElement('div');
     doc.className = 'print-doc';
 
     const h1 = document.createElement('h1');
     h1.className = 'print-title';
-    const nameTrim = (state.name || '').trim();
-    if (nameTrim) {
-      h1.textContent = `${possessive(nameTrim)} Prioritised List`;
-    } else {
-      h1.textContent = 'Prioritised List';
-    }
+    h1.textContent = titleText;
 
     const meta = document.createElement('div');
     meta.className = 'print-meta';
-    const dt = new Date();
-    const when = dt.toLocaleString();
     meta.textContent = `Generated on ${when} • ${n} task${n!==1?'s':''}`;
 
     const ol = document.createElement('ol');
@@ -298,7 +343,6 @@
     doc.appendChild(ol);
     printArea.appendChild(doc);
 
-    // Reveal and trigger print
     printArea.classList.remove('hidden');
 
     const cleanup = () => {
@@ -308,10 +352,8 @@
     };
     window.addEventListener('afterprint', cleanup);
 
-    // Some browsers need a tick before print to render the content
     setTimeout(() => {
       window.print();
-      // Fallback cleanup in case afterprint doesn't fire
       setTimeout(cleanup, 1000);
     }, 50);
   }
