@@ -296,19 +296,32 @@
     printArea.appendChild(doc);
 
     printArea.classList.remove('hidden');
+    try { printArea.setAttribute('aria-hidden', 'false'); } catch {}
 
     const cleanup = () => {
       printArea.classList.add('hidden');
       printArea.innerHTML = '';
+      try { printArea.setAttribute('aria-hidden', 'true'); } catch {}
       window.removeEventListener('afterprint', cleanup);
+      document.removeEventListener('visibilitychange', visHandler);
     };
+
+    // In Chrome, calling print synchronously from the user gesture avoids extra blank tabs/windows
     window.addEventListener('afterprint', cleanup);
 
-    // small delay lets layout settle before print
-    setTimeout(() => {
-      window.print();
-      setTimeout(cleanup, 1000);
-    }, 50);
+    const visHandler = () => {
+      // Fallback in case afterprint doesn't fire
+      if (document.visibilityState === 'visible') {
+        setTimeout(cleanup, 500);
+      }
+    };
+    document.addEventListener('visibilitychange', visHandler);
+
+    // Call print immediately (no setTimeout) to keep it within the user gesture
+    window.print();
+
+    // Final fallback cleanup in case neither event fires
+    setTimeout(cleanup, 2000);
   }
 
   function nextPendingPair() {
@@ -445,9 +458,11 @@
   if (printBtn) {
     printBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      if (state.tasks.length === 0) return;
+      e.stopPropagation();
+      if (state.tasks.length === 0) return false;
       handlePrint();
-    });
+      return false;
+    }, false);
   }
 
   // Name input persistence
@@ -461,6 +476,11 @@
     };
     nameInput.addEventListener('input', persistName);
     nameInput.addEventListener('change', persistName);
+  }
+
+  // Extra safety: ensure print button is not treated as a submit anywhere
+  if (printBtn) {
+    try { printBtn.setAttribute('type', 'button'); } catch {}
   }
 
   // Init
