@@ -259,7 +259,7 @@
     }
   }
 
-  // Build and open a print-friendly document for the current ranking
+  // Build and open a print-friendly document for the current ranking (single in-page print, no popup)
   function handlePrint() {
     const n = state.tasks.length;
     if (!n) return;
@@ -269,55 +269,7 @@
     const titleText = nameTrim ? `${possessive(nameTrim)} Prioritised List` : 'Prioritised List';
     const when = new Date().toLocaleString();
 
-    // Try a dedicated print window for maximal cross-browser reliability
-    const popup = window.open('', '_blank', 'noopener,noreferrer');
-    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-    if (popup && popup.document) {
-      const itemsHtml = sorted.map(t => `<li>${esc(toTitleCase(t.title))}</li>`).join('');
-      const html = `<!doctype html>
-<html lang="en">
-<meta charset="utf-8">
-<title>${esc(titleText)}</title>
-<style>
-  @page { size: auto; margin: 8mm; }
-  html, body { background: #fff; }
-  body { color: #000; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
-  .print-doc { max-width: 700px; margin: 0 auto; padding: 0; }
-  .print-title { font-size: 20pt; margin: 0 0 6pt 0; font-weight: 700; }
-  .print-meta { font-size: 9pt; margin: 0 0 10pt 0; color: #333; }
-  .print-list { font-size: 12pt; padding-left: 18pt; margin: 0; }
-  .print-list li { margin: 4pt 0; break-inside: avoid; page-break-inside: avoid; }
-</style>
-<body>
-  <div class="print-doc">
-    <h1 class="print-title">${esc(titleText)}</h1>
-    <div class="print-meta">Generated on ${esc(when)} • ${n} task${n!==1?'s':''}</div>
-    <ol class="print-list">${itemsHtml}</ol>
-  </div>
-  <script>
-    window.addEventListener('load', function(){
-      setTimeout(function(){
-        window.print();
-        setTimeout(function(){ try{ window.close(); }catch(e){} }, 300);
-      }, 50);
-    });
-    window.addEventListener('afterprint', function(){ try{ window.close(); }catch(e){} });
-  </script>
-</body>
-</html>`;
-      try {
-        popup.document.open();
-        popup.document.write(html);
-        popup.document.close();
-        try { popup.focus(); } catch {}
-      } catch (e) {
-        try { popup.close(); } catch {}
-      }
-      return;
-    }
-
-    // Fallback: use hidden in-page print area
+    // Use hidden in-page print area to avoid opening new windows/tabs
     printArea.innerHTML = '';
     const doc = document.createElement('div');
     doc.className = 'print-doc';
@@ -352,6 +304,7 @@
     };
     window.addEventListener('afterprint', cleanup);
 
+    // small delay lets layout settle before print
     setTimeout(() => {
       window.print();
       setTimeout(cleanup, 1000);
