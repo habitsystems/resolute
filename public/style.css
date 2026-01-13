@@ -112,3 +112,88 @@ button:disabled{opacity:0.6; cursor:not-allowed}
   .print-list { font-size: 12pt; padding-left: 18pt; margin: 0; }
   .print-list li { margin: 4pt 0; break-inside: avoid; page-break-inside: avoid; }
 }
+
+
+/* Spring theme refresh: fresh, quirky, and light */
+:root{
+  --bg:#fffdf6; /* spring light base */
+  --surface:#ffffff;
+  --card:#ffffff;
+  --text:#24313a; /* dark ink */
+  --muted:#6b7f8a;
+  --accent:#2bb673; /* mint green */
+  --accent-2:#ff9ecb; /* blush pink */
+  --danger:#e05260;
+  --border:#e3edf5;
+  --shadow: 0 10px 30px rgba(174, 200, 191, 0.35);
+}
+
+body{
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 100% -10%, rgba(255, 214, 165, 0.35), rgba(255,255,255,0) 60%),
+    radial-gradient(1000px 500px at -10% 110%, rgba(179, 224, 201, 0.35), rgba(255,255,255,0) 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><rect width='120' height='120' fill='none'/><circle cx='20' cy='20' r='6' fill='%23FFD166' fill-opacity='0.5'/><circle cx='20' cy='20' r='2' fill='%23FF6B6B' fill-opacity='0.6'/><path d='M90 20c10 0 18 8 18 18-10 0-18-8-18-18z' fill='%23A3E4B8' fill-opacity='0.4'/><ellipse cx='60' cy='60' rx='10' ry='8' fill='%23FFE3F1' fill-opacity='0.5'/><ellipse cx='55' cy='48' rx='3' ry='8' fill='%23FFE3F1' fill-opacity='0.5'/><ellipse cx='65' cy='48' rx='3' ry='8' fill='%23FFE3F1' fill-opacity='0.5'/><circle cx='57' cy='60' r='1.5' fill='%2324313A' fill-opacity='0.5'/><circle cx='63' cy='60' r='1.5' fill='%2324313A' fill-opacity='0.5'/><circle cx='60' cy='63' r='1.2' fill='%23FF9ECB' fill-opacity='0.6'/><circle cx='20' cy='90' r='6' fill='%2387CEFA' fill-opacity='0.4'/><polygon points='26,90 30,92 26,94' fill='%23F6BD60' fill-opacity='0.7'/><circle cx='100' cy='90' r='4' fill='%23FF9ECB' fill-opacity='0.45'/><circle cx='108' cy='90' r='4' fill='%23A3E4B8' fill-opacity='0.45'/><rect x='104' y='86' width='2' height='8' rx='1' fill='%2324313A' fill-opacity='0.4'/></svg>");
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: auto, auto, 120px 120px;
+  color: var(--text);
+}
+
+.container{ padding: 20px; }
+header{ padding-top: 28px; }
+
+.card{
+  background: var(--card);
+  border:1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.task-item{ background: rgba(173, 232, 208, 0.12); border-color: var(--border); }
+.choice{ background: var(--surface); border:1px solid var(--border); }
+.vs{ color: var(--muted); }
+
+button{ background: var(--accent); }
+button.secondary{ background: rgba(43, 182, 115, 0.06); color: var(--text); border:1px solid var(--border) }
+button:hover{ filter: brightness(1.02); box-shadow: 0 6px 18px rgba(43,182,115,0.2); transform: translateY(-1px); }
+button:active{ transform: translateY(0); filter: none; }
+button:focus-visible{ outline: 3px solid rgba(43,182,115,0.35); outline-offset: 2px; }
+
+input[type="text"]{ background: var(--surface); color: var(--text); border-color: var(--border); }
+input[type="text"]::placeholder{ color: #9ab0bb; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; animation: none !important; }
+}
+
+/* Ensure print stays clean (decor hidden by print rules above) */
+@media print {
+  body { background: #fff !important; }
+}
+
+
+/* Spring hero illustration sizing */
+.spring-hero{ margin-top: 8px; }
+.spring-hero svg{ width: 100%; max-width: 920px; height: 140px; display: block; }
+@media (max-width: 640px){ .spring-hero svg{ height: 110px; } }
+
+
+/* Cute bumble bee subtle motion (respects reduced motion) */
+.spring-hero .bee { animation: bee-bob 2.2s ease-in-out infinite; transform-origin: center; }
+.spring-hero .bee-wing { animation: wing-buzz 0.22s ease-in-out infinite alternate; transform-origin: center bottom; }
+
+@keyframes bee-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes wing-buzz {
+  0% { transform: rotate(0deg); opacity: 0.7; }
+  100% { transform: rotate(8deg); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spring-hero .bee, .spring-hero .bee-wing { animation: none !important; }
+}
