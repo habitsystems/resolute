@@ -175,14 +175,14 @@ input[type="text"]::placeholder{ color: #9ab0bb; }
 
 
 /* Spring hero illustration sizing */
-.spring-hero{ margin-top: 8px; }
-.spring-hero svg{ width: 100%; max-width: 920px; height: 140px; display: block; }
-@media (max-width: 640px){ .spring-hero svg{ height: 110px; } }
+.spring-hero{ margin: 18px 0; }
+.spring-hero svg{ width: 100%; max-width: 980px; height: 160px; display: block; }
+@media (max-width: 640px){ .spring-hero svg{ height: 120px; } }
 
 
 /* Cute bumble bee subtle motion (respects reduced motion) */
 .spring-hero .bee { animation: bee-bob 2.2s ease-in-out infinite; transform-origin: center; }
-.spring-hero .bee-wing { animation: wing-buzz 0.22s ease-in-out infinite alternate; transform-origin: center bottom; }
+.spring-hero .bee-wing { animation: wing-buzz 0.22s cubic-bezier(0.55, 0.19, 1.68, 0.53) infinite alternate; transform-origin: center bottom; }
 
 @keyframes bee-bob {
   0%, 100% { transform: translateY(0); }

@@ -16,82 +16,19 @@
   <header class="container">
     <h1>Prioritise Everything</h1>
     <p class="muted">Add tasks, compare pairs, get a ranked list. Add more tasks anytime — the ranking updates.</p>
-    <div class="spring-hero" aria-hidden="true">
-      <svg viewBox="0 0 800 140" role="img" focusable="false">
-        <!-- Bird -->
-        <g transform="translate(40,60) scale(1.2)">
-          <circle cx="0" cy="0" r="16" fill="#87CEFA"/>
-          <circle cx="-12" cy="-10" r="10" fill="#87CEFA"/>
-          <circle cx="-16" cy="-12" r="2.5" fill="#24313a"/>
-          <polygon points="16,0 28,6 16,10" fill="#F6BD60"/>
-        </g>
-        <!-- Bunny -->
-        <g transform="translate(200,70)">
-          <ellipse cx="0" cy="10" rx="18" ry="14" fill="#FFE3F1"/>
-          <ellipse cx="-8" cy="-12" rx="6" ry="18" fill="#FFE3F1"/>
-          <ellipse cx="8" cy="-12" rx="6" ry="18" fill="#FFE3F1"/>
-          <circle cx="-4" cy="8" r="2" fill="#24313a"/>
-          <circle cx="4" cy="8" r="2" fill="#24313a"/>
-          <circle cx="0" cy="14" r="2" fill="#FF9ECB"/>
-        </g>
-        <!-- Butterfly -->
-        <g transform="translate(360,60)">
-          <ellipse cx="-8" cy="0" rx="14" ry="10" fill="#FFD166" opacity="0.85"/>
-          <ellipse cx="8" cy="0" rx="14" ry="10" fill="#A3E4B8" opacity="0.85"/>
-          <rect x="-1.5" y="-12" width="3" height="24" rx="1.5" fill="#24313a"/>
-        </g>
-        <!-- Fox -->
-        <g transform="translate(80,105) scale(1.1)">
-          <!-- Body -->
-          <ellipse cx="0" cy="0" rx="16" ry="10" fill="#FFB480"/>
-          <!-- Head -->
-          <circle cx="-12" cy="-8" r="8" fill="#FFB480"/>
-          <!-- Ears -->
-          <polygon points="-18,-16 -14,-8 -22,-10" fill="#FF8C5A"/>
-          <polygon points="-6,-16 -10,-8 -2,-10" fill="#FF8C5A"/>
-          <!-- Face white -->
-          <path d="M -16 -6 q 4 6 8 0 q -4 2 -8 0" fill="#ffffff"/>
-          <!-- Eye -->
-          <circle cx="-14" cy="-8" r="1.5" fill="#24313a"/>
-          <!-- Tail -->
-          <path d="M 8 4 q 14 2 20 10 q -6 -2 -12 2 q -2 -6 -8 -12" fill="#FFB480"/>
-          <path d="M 24 14 q -4 -2 -8 2 q 2 -4 8 -2" fill="#ffffff" opacity="0.9"/>
-        </g>
-        <!-- Bumble Bee -->
-        <g transform="translate(700,40)">
-          <g class="bee">
-            <!-- Body -->
-            <ellipse cx="0" cy="0" rx="8" ry="5" fill="#F6BD60" stroke="#24313a" stroke-width="1"/>
-            <!-- Stripes -->
-            <rect x="-5" y="-5" width="2.5" height="10" fill="#24313a"/>
-            <rect x="-1" y="-5" width="2.5" height="10" fill="#24313a"/>
-            <rect x="3" y="-5" width="2.5" height="10" fill="#24313a"/>
-            <!-- Wings -->
-            <ellipse class="bee-wing" cx="-2" cy="-6" rx="4" ry="6" fill="#A3E4B8" opacity="0.7"/>
-            <ellipse class="bee-wing" cx="2" cy="-6" rx="4" ry="6" fill="#A3E4B8" opacity="0.7"/>
-            <!-- Eye -->
-            <circle cx="5" cy="-1" r="1.2" fill="#24313a"/>
-          </g>
-        </g>
-        <!-- Flowers -->
-        <g fill="#FF9ECB" opacity="0.9">
-          <circle cx="520" cy="95" r="6"/><circle cx="520" cy="95" r="2" fill="#F6BD60"/>
-        </g>
-        <g fill="#A3E4B8" opacity="0.9">
-          <circle cx="580" cy="95" r="6"/><circle cx="580" cy="95" r="2" fill="#F6BD60"/>
-        </g>
-        <g fill="#FFD166" opacity="0.9">
-          <circle cx="640" cy="95" r="6"/><circle cx="640" cy="95" r="2" fill="#F6BD60"/>
-        </g>
-      </svg>
-    </div>
   </header>
 
   <main class="container">
     <section class="card">
+      <div class="row" id="nameRow">
+        <input id="nameInput" type="text" placeholder="Your name (optional)" autocomplete="name" aria-label="Your name (optional)" maxlength="80" />
+      </div>
+      <p class="hint">You can change your name at any time. It is just used to personalize your list if you print or save it.</p>
+    </section>
+    <section class="card">
       <h2>1) Add your tasks</h2>
       <form id="addForm" class="row">
-        <input id="taskInput" type="text" placeholder="e.g. Write report, Pay invoices, Plan sprint" autocomplete="off" />
+        <input id="taskInput" type="text" placeholder="e.g. Write report, Pay invoices, Plan sprint" autocomplete="off" aria-label="Task name" />
         <button type="submit">Add task</button>
       </form>
       <p class="hint">Tip: Add as many as you like. Duplicates are ignored. You can come back and add more later.</p>
@@ -127,6 +64,91 @@
       </div>
     </section>
   </main>
+
+  <div class="container">
+    <div class="spring-hero" aria-hidden="true">
+      <svg viewBox="0 0 1000 160" role="img" focusable="false">
+        <!-- Bird -->
+        <g transform="translate(60,80) scale(1.2)">
+          <circle cx="0" cy="0" r="16" fill="#87CEFA"/>
+          <circle cx="-12" cy="-10" r="10" fill="#87CEFA"/>
+          <circle cx="-16" cy="-12" r="2.5" fill="#24313a"/>
+          <polygon points="16,0 28,6 16,10" fill="#F6BD60"/>
+        </g>
+        <!-- Bunny -->
+        <g transform="translate(220,80)">
+          <ellipse cx="0" cy="10" rx="18" ry="14" fill="#FFE3F1"/>
+          <ellipse cx="-8" cy="-12" rx="6" ry="18" fill="#FFE3F1"/>
+          <ellipse cx="8" cy="-12" rx="6" ry="18" fill="#FFE3F1"/>
+          <circle cx="-4" cy="8" r="2" fill="#24313a"/>
+          <circle cx="4" cy="8" r="2" fill="#24313a"/>
+          <circle cx="0" cy="14" r="2" fill="#FF9ECB"/>
+        </g>
+        <!-- Butterfly -->
+        <g transform="translate(400,80)">
+          <ellipse cx="-8" cy="0" rx="14" ry="10" fill="#FFD166" opacity="0.85"/>
+          <ellipse cx="8" cy="0" rx="14" ry="10" fill="#A3E4B8" opacity="0.85"/>
+          <rect x="-1.5" y="-12" width="3" height="24" rx="1.5" fill="#24313a"/>
+        </g>
+        <!-- Fox -->
+        <g transform="translate(560,80) scale(1.1)">
+          <ellipse cx="0" cy="0" rx="16" ry="10" fill="#FFB480"/>
+          <circle cx="-12" cy="-8" r="8" fill="#FFB480"/>
+          <polygon points="-18,-16 -14,-8 -22,-10" fill="#FF8C5A"/>
+          <polygon points="-6,-16 -10,-8 -2,-10" fill="#FF8C5A"/>
+          <path d="M -16 -6 q 4 6 8 0 q -4 2 -8 0" fill="#ffffff"/>
+          <circle cx="-14" cy="-8" r="1.5" fill="#24313a"/>
+          <path d="M 8 4 q 14 2 20 10 q -6 -2 -12 2 q -2 -6 -8 -12" fill="#FFB480"/>
+          <path d="M 24 14 q -4 -2 -8 2 q 2 -4 8 -2" fill="#ffffff" opacity="0.9"/>
+        </g>
+        <!-- Floofy Cow -->
+        <g transform="translate(720,80) scale(1.1)">
+          <!-- Body -->
+          <ellipse cx="0" cy="0" rx="20" ry="12" fill="#ffffff"/>
+          <!-- Spots -->
+          <ellipse cx="-6" cy="-2" rx="5" ry="3.5" fill="#A3E4B8" opacity="0.8"/>
+          <ellipse cx="7" cy="3" rx="4" ry="3" fill="#FF9ECB" opacity="0.8"/>
+          <!-- Head -->
+          <circle cx="-18" cy="-6" r="7" fill="#ffffff"/>
+          <!-- Ears/Horns -->
+          <path d="M -22 -12 q 3 -6 6 0" stroke="#24313a" stroke-width="1" fill="none"/>
+          <path d="M -14 -12 q 3 -6 6 0" stroke="#24313a" stroke-width="1" fill="none"/>
+          <!-- Muzzle -->
+          <ellipse cx="-20" cy="-2" rx="4.5" ry="3" fill="#F6BD60"/>
+          <circle cx="-22" cy="-2" r="0.9" fill="#24313a"/>
+          <circle cx="-18" cy="-2" r="0.9" fill="#24313a"/>
+          <!-- Eye -->
+          <circle cx="-16" cy="-7" r="1.2" fill="#24313a"/>
+        </g>
+        <!-- Goat -->
+        <g transform="translate(880,80) scale(1.1)">
+          <!-- Body -->
+          <ellipse cx="0" cy="0" rx="18" ry="11" fill="#FFE3F1"/>
+          <!-- Head -->
+          <circle cx="-14" cy="-6" r="6" fill="#FFE3F1"/>
+          <!-- Horns -->
+          <path d="M -16 -12 q -4 -6 -8 0" stroke="#24313a" stroke-width="1" fill="none"/>
+          <path d="M -12 -12 q 4 -6 8 0" stroke="#24313a" stroke-width="1" fill="none"/>
+          <!-- Beard -->
+          <path d="M -14 -2 q -2 4 0 6" stroke="#FF9ECB" stroke-width="1.2" fill="none"/>
+          <!-- Eye -->
+          <circle cx="-12" cy="-6" r="1.2" fill="#24313a"/>
+        </g>
+        <!-- Bumble Bee -->
+        <g transform="translate(960,80)">
+          <g class="bee">
+            <ellipse cx="0" cy="0" rx="8" ry="5" fill="#F6BD60" stroke="#24313a" stroke-width="1"/>
+            <rect x="-5" y="-5" width="2.5" height="10" fill="#24313a"/>
+            <rect x="-1" y="-5" width="2.5" height="10" fill="#24313a"/>
+            <rect x="3" y="-5" width="2.5" height="10" fill="#24313a"/>
+            <ellipse class="bee-wing" cx="-2" cy="-6" rx="4" ry="6" fill="#A3E4B8" opacity="0.7"/>
+            <ellipse class="bee-wing" cx="2" cy="-6" rx="4" ry="6" fill="#A3E4B8" opacity="0.7"/>
+            <circle cx="5" cy="-1" r="1.2" fill="#24313a"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
 
   <footer class="container muted small">
     <p>Runs locally in your browser. Your data is stored on this device only.</p>

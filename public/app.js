@@ -43,6 +43,14 @@
     return words.map((w,i,arr)=> titleCaseToken(w,i,arr)).join(' ');
   };
 
+  // Build possessive form for names (e.g., James' vs. Alex’s)
+  const possessive = (name) => {
+    if (!name) return '';
+    const n = name.trim();
+    if (!n) return '';
+    return /s$/i.test(n) ? (n + '’') : (n + '’s');
+  };
+
   // State
   const STORAGE_KEY = 'pe_state_v1';
   let state = {
@@ -50,6 +58,7 @@
     results: {}, // pairKey -> winnerId
     queue: [], // [pairKey]
     history: [], // [{pairKey, winnerId}]
+    name: '', // optional user name for print title
   };
 
   // DOM
@@ -62,13 +71,13 @@
   const compareDone = document.getElementById('compareDone');
   const compareCard = document.getElementById('compareCard');
   const progressText = document.getElementById('progressText');
-  const choiceA = document.getElementById('choiceA');
-  const choiceB = document.getElementById('choiceB');
+  // choice buttons are re-queried in renderCompare()
   const undoBtn = document.getElementById('undoBtn');
 
   const rankingList = document.getElementById('rankingList');
   const printBtn = document.getElementById('printBtn');
   const printArea = document.getElementById('printArea');
+  const nameInput = document.getElementById('nameInput');
 
   // Persistence
   function save() {
@@ -90,6 +99,7 @@
       if (!state.results || typeof state.results !== 'object') state.results = {};
       if (!Array.isArray(state.queue)) state.queue = [];
       if (!Array.isArray(state.history)) state.history = [];
+      if (typeof state.name !== 'string') state.name = '';
     } catch (e) {
       console.warn('Failed to load state:', e);
     }
@@ -189,7 +199,6 @@
       losses.set(loser, losses.get(loser) + 1);
     }
 
-    const byId = new Map(state.tasks.map(t => [t.id, t]));
 
     function headToHead(aId, bId) {
       const k = pairKey(aId, bId);
@@ -263,7 +272,12 @@
 
     const h1 = document.createElement('h1');
     h1.className = 'print-title';
-    h1.textContent = 'Prioritised List';
+    const nameTrim = (state.name || '').trim();
+    if (nameTrim) {
+      h1.textContent = `${possessive(nameTrim)} Prioritised List`;
+    } else {
+      h1.textContent = 'Prioritised List';
+    }
 
     const meta = document.createElement('div');
     meta.className = 'print-meta';
@@ -441,8 +455,25 @@
     });
   }
 
+  // Name input persistence
+  if (nameInput) {
+    try {
+      nameInput.value = (state.name || '');
+    } catch {}
+    const persistName = () => {
+      state.name = nameInput.value.replace(/\s+/g, ' ').trim();
+      save();
+    };
+    nameInput.addEventListener('input', persistName);
+    nameInput.addEventListener('change', persistName);
+  }
+
   // Init
   load();
+  // Prefill name after loading state
+  if (nameInput) {
+    try { nameInput.value = (state.name || ''); } catch {}
+  }
   // Ensure queue matches current tasks/results
   rebuildQueue();
   render();

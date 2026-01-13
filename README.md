@@ -56,6 +56,7 @@ Reset
 
 ## Print or export to PDF
 
+- (Optional) Enter your name above the ranked list; the print title will read “Name’s Prioritised List”.
 - Click the "Print / PDF" button under the Ranked priorities section.
 - In your browser’s print dialog, choose "Save as PDF" to export, or select a physical printer.
 - The printed document includes a clean title, timestamp, and your numbered priority list.
